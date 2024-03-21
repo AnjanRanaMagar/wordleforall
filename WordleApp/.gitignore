@@ -1,0 +1,12 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+auth/
+
+# Other files and folders to ignore
+.DS_Store
+.idea/
+.vscode/
