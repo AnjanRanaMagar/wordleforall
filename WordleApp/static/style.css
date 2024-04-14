@@ -82,3 +82,8 @@
   line-height: 1.6;          /* Spacing between lines */
   text-align: justify;       /* Justify the text for a clean look */
 }
+
+hr.rounded{
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+}

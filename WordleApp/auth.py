@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
+from flask_login import current_user
 from flask_login import login_user,login_required,logout_user
 
 auth = Blueprint('auth', __name__)
@@ -38,10 +39,6 @@ def login_post():
 def signup():
     return render_template('signup.html')
 
-# @auth.route('/game_play')
-# def game_play():
-#     return render_template('game_play.html')
-
 @auth.route('/signup',methods=['POST'])
 def signup_post():
     #code to validate user to db
@@ -71,3 +68,47 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+# Getting the Score for the User:
+
+from WordleApp.game_data import add_score, get_scores
+
+@auth.route('/game_play',methods=['POST'])
+@login_required
+def game_play():
+    try:
+        # Retrieve form data
+        score = request.form.get('score')
+        attempts = request.form.get('attempts')
+        time_needed= request.form.get('time_taken')
+
+        # Assuming add_game_data is a function in game_data.py that adds the game stats to the database
+        # print('I will be adding scores')
+        add_score(score, attempts,time_needed)
+        # print('scores already addded')
+
+
+        # Redirect to another page (e.g., the leaderboard) or back to the form
+        print('redirected to authleadershboard')
+        return redirect(url_for('auth.leaderboard'))  # 
+    
+    except Exception as e:
+        # Log the exception; for now, we print it
+        print(f"Error processing the game data: {e}")
+        flash(f"An error occurred: {e}", 'error')  # Display error message to the user
+        return redirect(url_for('auth.game_play'))  # Optionally redirect back to the form
+
+
+
+@auth.route('/leaderboard')
+@login_required
+def leaderboard():
+    # user = User.query.filter_by(email=email).first()
+    scores = get_scores(user_id=current_user.id)
+    # print(scores,current_user.id)
+    scores = [
+        {'date': score.date.strftime('%Y-%m-%d'), 'score': score.score, 'attempts': score.attempts,'time_taken':score.time_taken}
+        for score in scores]
+    
+    return render_template('leaderboard.html',scores=scores)
+

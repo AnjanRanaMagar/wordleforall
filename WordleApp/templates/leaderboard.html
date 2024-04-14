@@ -1,0 +1,163 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    
+<div class="columns is-variable is-3-desktop">
+    <div class="column has-background-primary-light"> <p class="title"> <span> Recent Game Stats </span></p>
+        <div id="latestScore">
+            <p class="subtitle">Score: <span id="todayScore"></span></p>
+            <p class="subtitle">Attempts: <span id="todayAttempts"></span></p>
+            <p class="subtitle">Time Taken: <span id="todayTimeTaken"></span></p>
+        </div>
+        <br>
+    </div>
+    <div class="column has-background-warning"> <p class="title"> All Time Game Stats </p>
+        <div id="latestScore">
+            <p class="subtitle">Average Score: <span id="avgScore"></span></p>
+            <p class="subtitle">Average Attempts: <span id="avgAttempts"></span></p>
+            <p class="subtitle">Average Time Taken: <span id="avgTimeTaken"></span></p>
+        </div>
+        <br>
+    </div>
+</div>
+
+<hr class="rounded">
+
+<div class="columns is-desktop"> 
+    <!-- Score trend -->
+    <div class="column">
+      
+        <canvas id="scoreTrendChart" width="400" height="200" style="background-color: whitesmoke;">
+        </canvas>
+        <br>
+        <p class="subtitle">Score Over Time</p>
+    </div>
+
+    <div class="column">
+         <!-- Attempts trend -->
+        
+        <canvas id="attemptsTrendChart" width="400" height="200" style="background-color: whitesmoke;">
+        </canvas>
+        <br>
+        <p class="subtitle">Attempts Over Time</p>
+    </div>
+</div>
+
+
+<script>
+    // scores are here coversted to dict.
+    var scores = {{ scores | tojson | safe }};
+    console.log(scores)
+
+    if (scores.length > 0) {
+        var lastScore = scores[scores.length-1];
+        // Set the text content of the spans to the values from the last score
+    document.getElementById('todayScore').textContent = lastScore.score;
+    document.getElementById('todayAttempts').textContent = lastScore.attempts;
+    document.getElementById('todayTimeTaken').textContent = lastScore.time_taken + ' minutes';
+        } else {
+        document.getElementById('latestScore').textContent = 'No scores available';
+        }
+
+    var dates = scores.map(score => moment(score.date).format('YYYY-MM-DD'));  // Format dates
+    var scoreValues = scores.map(score => score.score); //get score
+    var attemptsValues = scores.map(score =>score.attempts); //get no. of attempts
+    
+    //chart for scores
+    var ctx = document.getElementById('scoreTrendChart').getContext('2d');
+    var scoreTrendChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Score',
+                data: scoreValues,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 150,
+                    min: 0
+                }
+            }
+        }
+    });
+    
+    //charts for attempts
+    var ctx = document.getElementById('attemptsTrendChart').getContext('2d');
+    var attemptsTrendChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Attempts',
+                data: attemptsValues,
+                fill: false,
+                borderColor: 'rgb(255,100,100)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 40,
+                    min: 0
+                }
+            }
+        }
+    });
+
+    //calculating average scores by date:
+       // Group scores by date
+    var groupedScores = {};
+    scores.forEach(score => {
+        let formattedDate = moment(score.date).format('YYYY-MM-DD');  // Format the date
+        if (!groupedScores[formattedDate]) {
+            groupedScores[formattedDate] = { scores: [], attempts: [], times: [] };
+        }
+        groupedScores[formattedDate].scores.push(score.score);
+        groupedScores[formattedDate].attempts.push(score.attempts);
+        groupedScores[formattedDate].times.push(score.time_taken);
+    });
+
+    // Calculate averages for each date
+    var dates = [];
+    var averageScores = [];
+    var averageAttempts = [];
+    var averageTimes = [];
+    Object.keys(groupedScores).forEach(date => {
+        dates.push(date);
+        let data = groupedScores[date];
+
+        let avgScore = parseFloat((data.scores.reduce((a, b) => a + b, 0) / data.scores.length).toFixed(2));
+        let avgAttempts = parseFloat((data.attempts.reduce((a, b) => a + b, 0) / data.attempts.length).toFixed(2));
+        let avgTime = parseFloat((data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(2));
+
+        averageScores.push(avgScore);
+        averageAttempts.push(avgAttempts);
+        averageTimes.push(avgTime);
+    });
+
+ // Now you can use 'dates', 'averageScores', 'averageAttempts', and 'averageTimes' for visualization
+
+    document.getElementById('avgScore').textContent = averageScores[0];
+    document.getElementById('avgAttempts').textContent = averageAttempts[0];
+    document.getElementById('avgTimeTaken').textContent = averageTimes[0] + ' minutes';
+
+</script>
+    
+    
+    
+
+{% endblock %}
