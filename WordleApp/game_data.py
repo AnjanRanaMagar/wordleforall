@@ -13,15 +13,11 @@ def add_score(score_value, attempts_count,time_needed):
 
 
 def get_scores(user_id=None):
-    # print(user_id)
     query = Score.query.join(User, user_id== Score.user_id)
-    # print('joined worked')
-   
     if user_id:
         query = query.filter(Score.user_id == user_id)
     query = query.order_by(Score.date.asc())
     
     scores_with_users = query.all()
-    # print(scores_with_users)
     return scores_with_users
 

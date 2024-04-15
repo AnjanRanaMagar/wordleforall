@@ -53,7 +53,7 @@
 <script>
     // scores are here coversted to dict.
     var scores = {{ scores | tojson | safe }};
-    console.log(scores)
+   
 
     if (scores.length > 0) {
         var lastScore = scores[scores.length-1];

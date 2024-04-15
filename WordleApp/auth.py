@@ -78,16 +78,19 @@ from WordleApp.game_data import add_score, get_scores
 def game_play():
     try:
         # Retrieve form data
-        score = request.form.get('score')
-        attempts = request.form.get('attempts')
-        time_needed= request.form.get('time_taken')
+        data = request.get_json()
+        score = data.get('score')
+        attempts = data.get('attempts')
+        time_needed= data.get('timeTaken')
 
         # Assuming add_game_data is a function in game_data.py that adds the game stats to the database
         # print('I will be adding scores')
         add_score(score, attempts,time_needed)
-        # print('scores already addded')
+        print('scores already addded')
 
+        flash(f'Your score was {score} after {attempts} attempts, and it took {time_needed} seconds.', 'success')
 
+       
         # Redirect to another page (e.g., the leaderboard) or back to the form
         print('redirected to authleadershboard')
         return redirect(url_for('auth.leaderboard'))  # 
