@@ -18,6 +18,6 @@ def profile():
     return render_template('profile.html',name=current_user.name)
 
 @main.route('/game_play')
-@login_required # login is requred to see the profile.
+@login_required # login is requred to see the game play
 def game_play():
     return render_template('game_play.html',name=current_user.name)
