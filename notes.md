@@ -42,7 +42,7 @@ Note: The position of the file does not matter, however the hirerchy matters.
 ```python3 -m venv auth```. Auth is our virtual environment name for this project. You can give other name. 
 
 * Activate virtual env 'auth' : ```source auth/bin/activate```. Once the venv 'auth' is activate run following code to install those dependencies or flask packages. <br>
-```pip3 install -r soft_requirements.txtx```. If this does not work, try googling on just install using: ```pip install flask flask-sqlalchemy flask-login```
+```pip3 install -r soft_requirements.txtx```. If this does not work, try googling on just install using: ```pip install flask flask-sqlalchemy flask-login flask-migrate```
 
 Once the virtual env is activated, make sure you are in ist-team .. folder. In order to go back to previous folder use the command: ```cd ..```.
 
