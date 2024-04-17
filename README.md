@@ -8,7 +8,73 @@ Project stakeholders: Students and Faculty of the Claremont Colleges
 
 Project requirements: User-friendly and clean interface, account registration, login interface and authentication, word puzzle or letters rearranging gameplay mechanics, score leaderboard.
 
-Weekly meeting time: Every Tuesday.
+### How to Run this application?
+
+Follow the following steps to run the application in your local machine. 
+
+1. Clone the project into your local machine.
+```git clone <link_of_repository>```<br>
+If you are already working in the repository but your local repo is not upto date to the remote repo, you may need to rebase the local repo so your local repo is upto date to remote repo.
+You can rebase by following the steps below:
+    * a. Fetch the latest change from the remote repo:
+    ```git fetch origin```
+    * b. If you are not in main branch go to the main branch : ```git checkout main```
+    * c. Merge the changes from remote branch:
+    ```git merge origin/main```
+    <br>
+    If you see a conflict during a merge, contact me (Anjan) for help.
+
+2. After 1st step is done and you have a upto date repository from a remote location, make sure your file has a following hirerchy (order does not matter). 
+```
+ist-300-team-2
+    | instance
+        db.sqlite
+    | migrations
+    | UI
+    | PartC
+    | PartD
+    | WordleApp # this is our main project file.
+        | static
+            | images
+            app.js
+            style.css
+            ...
+        | templates
+            | base.html
+            | index.html
+            ....
+        __init__.py
+        .gitignore
+        auth.py
+        current_user.txt # this is just for our team demo, only test-user is shown
+        main.py
+        models.py
+        soft_requirements.txt #this has list of our software dependencies
+    | notes.md
+    | Readme.md
+
+```
+
+3. After verifying the data structure, you will need to install the requirements or dependencies for the wordleapp application to run. You will create a virtual environment in this step:
+
+* Create a virtual env: Go to you 'WordleApp' directory (```cd /WordleApp```). When there run the following code:
+```python3 -m venv auth```. Auth is our virtual environment name for this project. You can give other name. 
+
+* Activate virtual env 'auth' : ```source auth/bin/activate```. Once the venv 'auth' is activate run following code to install those dependencies or flask packages. <br>
+```pip3 install -r soft_requirements.txtx```. If this does not work, try googling on just install using: ```pip install flask flask-sqlalchemy flask-login flask-migrate```
+
+Once the virtual env is activated, make sure you are in ist-team .. folder. In order to go back to previous folder use the command: ```cd ..```.
+
+4. Run the flask app: To runt the flask, we need to specify our app is "WordleApp'. In order to do so use the following command:
+```export FLASK_APP=WordleApp```.
+
+    * Run flask: ``` flask run ```.
+    Once it's running it's development server go to log in and try (current user login available in current_user.txt).
+    Feel free to create a new user through signup.
+<br>
+
+Note: If you get some database or server issues, let me know through text or email. 
+
 
 **Part A** **(Meeting on 1/27)**
 **Users stories:**
@@ -101,3 +167,19 @@ Meeting on February 13th: we created a burn down chart that will allow us to tra
 Provide evidence in your github repository that you are meeting for periodic stand up meetings - your team should ideally meet at least twice a week.
 Ensure that your development and testing environment is set up. Be sure to have some working functional (however rudimentary) and test code in your repository.
 
+**PART C** **(Milestone1.0)**
+
+Please refer to the folder named PartC for the Milestone1.0. The milestone includes details on Agile Methods used, Burndown charts, SiteMaps, etc.
+
+
+**PART D** **(Milestone2.0)**
+
+Please refer to the folder named PartD for the Milestone2.0.The milestone includes details on Agile Methods used, Burndown charts, SiteMaps, etc.
+
+**Three Most Important learning outcomes** **(Milestone2.0)**
+
+- Iterative development and continuous feedback to meet user expectations successfully
+
+- Prioritization and adaptability, especially considering strict time constraints
+
+- Cross-functional collaboration among team members with diverse skill sets
