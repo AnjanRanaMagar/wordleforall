@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash,session,jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
@@ -79,6 +79,8 @@ def game_play():
     try:
         # Retrieve form data
         data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data received'}), 400
         score = data.get('score')
         attempts = data.get('attempts')
         time_needed= data.get('timeTaken')
@@ -86,21 +88,18 @@ def game_play():
         # Assuming add_game_data is a function in game_data.py that adds the game stats to the database
         # print('I will be adding scores')
         add_score(score, attempts,time_needed)
-        print('scores already addded')
+      
+        import time 
+        time.sleep(2)
 
-        flash(f'Your score was {score} after {attempts} attempts, and it took {time_needed} seconds.', 'success')
-
-       
-        # Redirect to another page (e.g., the leaderboard) or back to the form
-        print('redirected to authleadershboard')
-        return redirect(url_for('auth.leaderboard'))  # 
+        return jsonify({
+                'message': f'Your score today is {score} in {attempts} attempts. Click Ok to go to your Leaderboard.',
+                'redirect_url': url_for('auth.leaderboard')
+            })
     
     except Exception as e:
-        # Log the exception; for now, we print it
-        print(f"Error processing the game data: {e}")
-        flash(f"An error occurred: {e}", 'error')  # Display error message to the user
-        return redirect(url_for('auth.game_play'))  # Optionally redirect back to the form
 
+        return redirect(url_for('auth.game_play'))  # Optionally redirect back to the form
 
 
 @auth.route('/leaderboard')

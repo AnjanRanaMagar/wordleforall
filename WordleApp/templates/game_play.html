@@ -2,16 +2,55 @@
 
 {% block content %}
 
-    <div class="section">
+<style>
+   .game-container {
+    position: relative; /* Needed for absolute positioning of the pseudo-element */
+    width: 100%;
+    height: 100vh; /* Set the height of the game container to 100% of the viewport height */
+    z-index: 0; /* Ensure it stays under any content */
+}
+
+    .game-container::before {
+        content: ""; /* Pseudo-element requires content to be displayed */
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('{{ url_for("static", filename="images/game.png") }}');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.4; /* Set the opacity of the image */
+        z-index: -1; /* Place it behind the content */
+
+    }
+
+
+    .title-container {
+        position: relative;
+        top: 80px; /* Adjust this value to bring the title slightly up */
+    }
+
+    .title {
+        text-align: center; /* Center the title horizontally */
+        color: white; /* Set the color of the title text to white for better visibility */
+        font-size: 3.5em; /* Increase the font size of the title for better visibility */
+        font-weight: bold; /* Make the text bold */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a slight shadow to improve contrast */
+    }
+</style>
+
+    <div class="section is-small">
         <!-- <div class="container"> -->
             <div class="game-container">
               
                 <div class="title-container">
-                    <h1 class="title">W o r d l e F o r A l l</h1>
+                    <h1 class="title">WordleForAll</h1>
                 </div>
 
                 <div class="message-container">
-                <!-- Show Score -->
+         
                 </div>
 
                 <div class="tile-container">

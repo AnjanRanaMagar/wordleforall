@@ -2532,7 +2532,7 @@ let timeTaken = 60; // Default value set for 60 seconds
 
 const displayFinalScore = (score, attempts, timeTaken) => {
     const scoreElement = document.createElement('div');
-    scoreElement.textContent = `Final Score: ${score}, Attempts: ${attempts}, Time Taken: ${timeTaken} seconds`;
+    // scoreElement.textContent = `Final Score: ${score}, Attempts: ${attempts}, Time Taken: ${timeTaken} seconds`;
     document.querySelector('.message-container').appendChild(scoreElement);
 
     // Send the score, attempts, and time data to the Flask backend
@@ -2553,10 +2553,21 @@ const sendGameData = async (score, attempts, timeTaken) => {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const responseData = await response.json(); // Assuming the server sends back JSON
-        console.log('Score submitted successfully:', responseData.message);
+        const responseData = await response.json();
+      
+
+        // Display the score in some way here, if needed
+
+        alert(responseData.message);
+        
+
+        // Redirect to the leaderboard after showing the message
+        setTimeout(() => {
+            window.location.href = responseData.redirect_url;
+        }, 10); // Delay the redirect for 5 seconds to display the message
+
     } catch (error) {
         console.error('Failed to submit score:', error);
     }
-};
+}
 

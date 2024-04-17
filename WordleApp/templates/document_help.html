@@ -2,25 +2,31 @@
 
 {% block content %}
 
-<p class="subtitle">About WordleForAll App</p>
-<div class="intro">
-        <p>
-    Our WordleForApp is inspired by New York Times Wordle game. 
+<p class="subtitle" style="color: black; font-weight: bold;"><strong>Learn more about WordleForAll</strong></p>
+<div class="intro" style="background-image: url('/static/images/back.png'); background-size: cover; color: black; font-weight: bold;">
+    <p style="opacity: 1;">
+        WordleForAll is a game inspired from the popular New York Times Wordle game. <br><br>
 
-    WordleForAll is a daily word game where players have six attempts to guess a five letter word (beta version). Feedback for each guess is given in the form of colored tiles to indicate if letters match the correct position. 
-    Daily words are curated by university student at Claremont Graduate university using the Oxford Dictionary. 
+        WordleForAll presents daily word challenges to promote vocabulary skills, critical thinking, and pure enjoyment, with words curated using the Oxford Dictionary. <br><br>
 
-    Currently, you do have to register or sign in to play our WordleForAll game. However, our game is free to play on all platforms. 
-    We recommend creating a quick account or signing in with an a fake gamil account for privacy concern (remember your fake email and password). You can play Wordle across devices or platforms while retaining your progress and stats. 
-        </p>
-</div>
-<div class="intro">
-    <p>
-How to play?
-Welcome to Wordle For All! Dive into this simple yet engaging word game. Your task? Guess the hidden word within the allotted attempts. Input your guesses and receive feedback on letter placement. But be strategic: refine your strategy with each attempt, surpass your friends’ scores, and climb the Leaderboard!
-Wordle promotes vocabulary skills, critical thinking, and pure enjoyment. Feel free to customize the game settings to your liking. Wordle on, player!
-
+        At present, access to our WordleForAll game requires registration or sign-in. However, the game is free to play across all platforms, allowing you to retain all of your progresses.
+        We recommend creating a quick account and signing in with a temporary Gmail account to address any privacy concerns. 
     </p>
 </div>
+<div class="intro" style="background-image: url('/static/images/how.png'); background-size: cover; color: black; font-weight: bold;">
+    <!-- <p>
+        <strong style="font-size: 120%;">How can I play?</strong> <br><br>
+        Your task? Guess the hidden word within the allotted attempts. Input your guesses and receive colored-tile feedback on letter placement. <br>
+        Be strategic: refine your strategy with each attempt, surpass your friends’ scores, and climb the Leaderboard! <br>
+        Finally, feel free to customize the game settings to your liking. <br><br>
+
+        Wordle on, player!
+    </p> -->
+    <figure class="image is-square">
+        <img src="{{ url_for('static', filename='images/howtoplay.png') }}" alt="Imges from New Your Times help section.">
+    </figure>
+    
+</div>
+
 
 {% endblock %}

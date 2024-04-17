@@ -12,7 +12,7 @@
         <div id="latestScore">
             <p class="subtitle">Score: <span id="todayScore"></span></p>
             <p class="subtitle">Attempts: <span id="todayAttempts"></span></p>
-            <p class="subtitle">Time Taken: <span id="todayTimeTaken"></span></p>
+            <p class="subtitle">Time Taken: 1 min and <span id="todayTimeTaken"></span></p>
         </div>
         <br>
     </div>
@@ -48,6 +48,23 @@
         <p class="subtitle">Attempts Over Time</p>
     </div>
 </div>
+
+<hr class="rounded">
+ <div class="columns is-success">
+    <div class="column">
+        <p class="subtitle">
+            
+        </p>
+    </div>
+    <div class="social-buttons"> 
+        <a href="https://www.facebook.com/sharer/sharer.php?u=example.com" target="_blank" class="button facebook">Share in Facebook</a>
+        <a href="https://www.instagram.com/" target="_blank" class="button instagram">Share in Instagram</a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=example.com&title=My%20Chart&summary=Interesting%20Data&source=LinkedIn" target="_blank" class="button linkedin">Share in LinkedIn</a>
+        <button id="download">Download Chart</button>
+    </div>
+ </div>
+
+
 
 
 <script>
@@ -154,7 +171,20 @@
 
     document.getElementById('avgScore').textContent = averageScores[0];
     document.getElementById('avgAttempts').textContent = averageAttempts[0];
-    document.getElementById('avgTimeTaken').textContent = averageTimes[0] + ' minutes';
+    document.getElementById('avgTimeTaken').textContent = averageTimes[1] + ' minutes';
+
+
+    document.getElementById('download').addEventListener('click', function() {
+    var url = scoreTrendChart.toBase64Image();
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'chart.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});
+
+
 
 </script>
     

@@ -2,6 +2,38 @@
 
 {% block content %}
 
+<style>
+
+    hr.rounded {
+        margin-left: calc(50% - 200px); /* Center the line */
+        margin-right: calc(50% - 200px); /* Center the line */
+    }
+
+    .section.is-medium {
+    position: relative; /* Needed for absolute positioning of the pseudo-element */
+    background-size: cover;
+    background-position: center center; /* Center the background image */
+    background-repeat: no-repeat;
+    z-index: 0; /* Ensure it stays under any content */
+}
+
+.section.is-medium::before {
+    content: ""; /* Pseudo-element requires content to be displayed */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('{{ url_for("static", filename="images/MAIN2.png") }}');
+    opacity: 0.4; /* Set the opacity of the image */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: -1; /* Place it behind the content */
+}
+
+</style>
+
 <section class="section is-medium">
     
     <div class="container">
@@ -9,7 +41,7 @@
             <h1 class="title">Welcome, <strong style="text-transform: capitalize;"> {{ name }}!</strong></h1>
             <br>
             <p class="subtitle">
-                Ready to test your skills today? or check your progress?
+                Ready to test your skills today, or just checking your overall progress?
             </p>
         </div>
         <hr class="rounded">
