@@ -258,6 +258,7 @@ body {
 
 /* bulma overide css for game */
 
+
 .game-container {
   display: flex;
   flex-direction: column;
