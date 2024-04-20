@@ -1,6 +1,7 @@
 ### How to Run this application?
 
 Follow the following steps to run the application in your local machine. Please communicate with Anjan if you are making bid changes to the repo before pushing in remote repo.
+## I made some edits in this file.
 
 1. Clone the project into your local machine.
 ```git clone <link_of_repository>```<br>
